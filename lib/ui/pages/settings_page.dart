@@ -6,16 +6,16 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('settings'),
-      ),
-    );
+    return Container(); 
+    // Scaffold(
+    //   body: Center(
+    //     child: Text('settings'),
+    //   ),
+    // );
   }
 }
 
 class SettingsPageAppBar extends StatelessWidget with PrefAppBar {
-
   @override
   Widget build(BuildContext context) {
     return AppBar(

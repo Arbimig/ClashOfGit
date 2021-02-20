@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:clashofclans/bloc/player_cubit_json/player_cubit.dart';
 import 'package:clashofclans/bloc/player_cubit_json/player_cubit_state.dart';
 import 'package:clashofclans/repositories/constants.dart';
 import 'package:clashofclans/repositories/database/data_base.dart';
 import 'package:clashofclans/repositories/json/json_players.dart';
 import 'package:clashofclans/ui/pages/apps_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
 class ProfilesPage extends StatelessWidget {
@@ -16,85 +14,7 @@ class ProfilesPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PlayerCubit, PlayerState>(
-      builder: (BuildContext context, state) {
-        if (state is PlayerEmptyState) {
-          return Column(
-            children: [
-              addCard(context),
-              sfDataBasePlayerList(context),
-            ],
-          );
-        }
-        if (state is PlayerLoadingState) {
-          return Column(children: [
-            Card(
-              child: Center(
-                child: Container(
-                  width: deviceWidth * 0.9,
-                  height: deviceHeight * 0.1,
-                  child: Center(child: CircularProgressIndicator()),
-                ),
-              ),
-            ),
-            sfDataBasePlayerList(context, state: state)
-          ]);
-        }
-        if (state is PlayerLoadedState) {
-          var data = state.playersInfo;
-          return Column(
-            children: [
-              addCard(context),
-              Expanded(
-                child: Container(
-                  child: ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          child: InkWell(
-                            onLongPress: () {
-                              List<String> keys = sfDataBase.getSFTagList();
-                              showAlertDialog(context, keys[index]);
-                            },
-                            child: Center(
-                                child: Container(
-                              width: deviceWidth * 0.9,
-                              height: deviceHeight * 0.1,
-                              child: ListTile(
-                                trailing: Container(
-                                    width: deviceHeight * 0.08,
-                                    height: deviceHeight * 0.08,
-                                    child: Image.network(
-                                        '${data[index].league.iconUrls.medium}')),
-                                title: Text(
-                                  '${data[index].name}',
-                                  style: TextStyle(fontWeight: FontWeight.w300),
-                                ),
-                                subtitle: Text(
-                                  '${data[index].tag}',
-                                  style: TextStyle(fontWeight: FontWeight.w300),
-                                ),
-                              ),
-                            )),
-                          ),
-                        );
-                      }),
-                ),
-              ),
-            ],
-          );
-        }
-        if (state is PlayerErrorState) {
-          return Column(
-            children: [
-              addCard(context),
-              sfDataBasePlayerList(context),
-            ],
-          );
-        }
-        return Center(child: Text('Error'));
-      },
-    );
+    return Container();
   }
 
   Widget sfDataBasePlayerList(BuildContext context, {PlayerState state}) {
@@ -189,7 +109,6 @@ class ProfilesPage extends StatelessWidget {
     Widget deleteButton = FlatButton(
       child: Text("Delete"),
       onPressed: () {
-        playerCubitFunc.deletePlayer(playerTag);
         Navigator.pop(context);
       },
     );
@@ -249,7 +168,6 @@ class ProfilesPage extends StatelessWidget {
 
       final playerTag = textEditingController.value.text.replaceAll('#', '');
 
-      playerCubitFunc.fetchPlayer(playerTag);
       print(playerTag);
       Navigator.pop(context);
     } else {
@@ -266,6 +184,7 @@ class ProfilesPage extends StatelessWidget {
       return null;
     }
   }
+
 }
 
 class ProfilesPageAppBar extends StatelessWidget with PrefAppBar {

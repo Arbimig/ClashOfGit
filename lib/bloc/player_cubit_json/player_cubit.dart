@@ -1,54 +1,61 @@
-import 'dart:convert';
+import 'dart:async';
 import 'dart:developer';
+
 import 'package:clashofclans/bloc/player_cubit_json/player_cubit_state.dart';
 import 'package:clashofclans/repositories/database/data_base.dart';
 import 'package:clashofclans/repositories/json/json_players.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PlayerCubit extends Cubit<PlayerState> {
-  PlayerCubit() : super(PlayerEmptyState());
+  PlayerCubit() : super(PlayerLoadingState());
 
   SFDataBase sfDataBase = SFDataBase();
 
-  Future<dynamic> deletePlayer(String playerTag) async {
-    SFDataBase sfDataBase = SFDataBase();
-    emit(PlayerEmptyState());
+  void delete(playerTag) async {
     try {
-      emit(PlayerLoadingState());
-      sfDataBase.deleteJsonSF(playerTag);
-      int length = sfDataBase.getSFTagList().toString().length;
-      List<String> playerTagList = sfDataBase.getSFTagList();
-      List<PlayerInfo> stateList = List.generate(length,
-          (index) => sfDataBase.getJsonOfSF(jsonDecode(playerTagList[index])));
-      emit(PlayerLoadedState(playersInfo: stateList));
+      await sfDataBase.deleteJsonSF(playerTag);
+      log('все забись  add');
+
+      List<PlayerInfo> playerInfoList = await _playerInfoList();
+      if (playerInfoList == null) {
+        log('playerInfoList == null');
+        emit(PlayerLoadedState(playersInfoList: playerInfoList));
+      } else {
+        emit(PlayerLoadedState(playersInfoList: playerInfoList));
+      }
     } catch (e) {
-      print('deleteError' + e.toString());
-      PlayerErrorState();
+      log('add error  ' + e.toString());
     }
   }
 
-  Future<dynamic> fetchPlayer(String playerTag) async {
-    SFDataBase sfDataBase = SFDataBase();
-
+  void add(playerTag) async {
     try {
-      emit(PlayerLoadingState());
-      final PlayerInfo _playerInfo =
-          await GetPlayerInfo().getData('$playerTag');
-      sfDataBase.addJsonToSF(playerTag, jsonEncode(_playerInfo));
-      log(_playerInfo.toString() + ' _playerInfo log of fetchPlayer');
-      int length = sfDataBase.getSFTagList().toString().length;
-      List<String> playerTagList = sfDataBase.getSFTagList();
-      List<PlayerInfo> stateList = List.generate(length,
-          (index) => sfDataBase.getJsonOfSF(jsonDecode(playerTagList[index])));
-      emit(PlayerLoadedState(playersInfo: stateList));
+      await sfDataBase.addJsonToSF(playerTag);
+      log('все забись  add');
+      List<PlayerInfo> playerInfoList = await _playerInfoList();
+      log(playerInfoList[0].clan.name.toString());
+      emit(PlayerLoadedState(playersInfoList: playerInfoList));
     } catch (e) {
-      print('AddError' + e.toString());
-      emit(PlayerErrorState());
+      log('add error  ' + e.toString());
     }
+  }
+
+  Future<List<PlayerInfo>> _playerInfoList() async {
+    List<String> tags = await getTags();
+    log('и тут норм _playerInfoList');
+    if (tags.length != 0) {
+      List<PlayerInfo> listPlayerInfo = await Future.wait(Iterable.generate(
+          tags.length, (i) => sfDataBase.getJsonOfSF(tags[i])));
+      log(listPlayerInfo.length.toString() + '  _playerInfoList lenght');
+      log(listPlayerInfo[0].expLevel.toString() + '  _playerInfoList');
+      return listPlayerInfo;
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<String>> getTags() async {
+    List<String> _tag = await sfDataBase.getSFTagList();
+    return _tag;
   }
 }
-
-// Во вкладке аккунты передаеться переменная с тегом игрока
-// Она отправляеться в кубит и вызывает джейсон
-// сохраненная инфа поступает
-// GQQC00CL

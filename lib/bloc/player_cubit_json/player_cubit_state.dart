@@ -7,11 +7,10 @@ class PlayerEmptyState extends PlayerState {}
 class PlayerLoadingState extends PlayerState {}
 
 class PlayerLoadedState extends PlayerState {
-  List<PlayerInfo> playersInfo;
-
+  List<PlayerInfo> playersInfoList;
   PlayerLoadedState({
-    this.playersInfo,
-  }) : assert(playersInfo != null);
+    this.playersInfoList,
+  });
 }
 
 class PlayerErrorState extends PlayerState {}

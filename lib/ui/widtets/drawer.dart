@@ -1,6 +1,4 @@
 import 'package:clashofclans/bloc/navigation_cubit.dart';
-import 'package:clashofclans/bloc/player_cubit_json/player_cubit.dart';
-import 'package:clashofclans/bloc/player_cubit_json/player_cubit_state.dart';
 import 'package:clashofclans/repositories/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,37 +17,23 @@ class MyDrawer extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            BlocBuilder<PlayerCubit, PlayerState>(
-              builder: (context, state) {
-                if (state is PlayerLoadedState) {
-                  print('state is playerLoadedState');
-                  return Column(
-                    children: [
-                      _createHeader(state.playersInfo[0]),
-                      _createDrawerItem(
-                          icon: Icons.analytics_outlined,
-                          text: 'statistics',
-                          onTap: () {
-                            getPage.getStat();
-                            Navigator.pop(context);
-                          }),
-                      _createDrawerItem(
-                          icon: Icons.contacts_outlined,
-                          text: 'сlan',
-                          onTap: () {
-                            getPage.getClan();
-                            Navigator.pop(context);
-                          }),
-                      Divider(),
-                    ],
-                  );
-                } else {
-                  return Container(
-                    height: deviceHeight * 0.01,
-                  );
-                }
-              },
-            ),
+            // _createHeader(),
+            _createDrawerItem(
+                icon: Icons.analytics_outlined,
+                text: 'statistics',
+                onTap: () {
+                  getPage.getStat();
+                  Navigator.pop(context);
+                }),
+            _createDrawerItem(
+                icon: Icons.contacts_outlined,
+                text: 'сlan',
+                onTap: () {
+                  getPage.getClan();
+                  Navigator.pop(context);
+                }),
+            Divider(),
+
             _createDrawerItem(
                 icon: Icons.map_outlined,
                 text: 'maps',
@@ -111,6 +95,7 @@ class MyDrawer extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _createHeader(data) {
     return DrawerHeader(
       margin: EdgeInsets.zero,

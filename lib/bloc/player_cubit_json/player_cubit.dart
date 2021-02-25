@@ -14,38 +14,47 @@ class PlayerCubit extends Cubit<PlayerState> {
   void delete(playerTag) async {
     try {
       await sfDataBase.deleteJsonSF(playerTag);
-      log('все забись  add');
 
-      List<PlayerInfo> playerInfoList = await _playerInfoList();
+      List<PlayerInfo> playerInfoList = await fplayerInfoList();
       if (playerInfoList == null) {
-        log('playerInfoList == null');
-        emit(PlayerLoadedState(playersInfoList: playerInfoList));
+        log('playerInfoList == null, player_cubit.dart, delete()');
+        emit(PlayerLoadingState());
       } else {
-        emit(PlayerLoadedState(playersInfoList: playerInfoList));
+        log('playerInfoList != null, player_cubit.dart, delete()');
+        emit(PlayerLoadingState());
       }
     } catch (e) {
-      log('add error  ' + e.toString());
+      log('delete error  ' + e.toString());
+      emit(PlayerLoadingState());
     }
   }
 
   void add(playerTag) async {
     try {
       await sfDataBase.addJsonToSF(playerTag);
-      log('все забись  add');
-      List<PlayerInfo> playerInfoList = await _playerInfoList();
-      log(playerInfoList[0].clan.name.toString());
-      emit(PlayerLoadedState(playersInfoList: playerInfoList));
+
+      log('adding player info, player_cubit.dart, add() ');
+      emit(PlayerLoadingState());
     } catch (e) {
       log('add error  ' + e.toString());
+      emit(PlayerLoadingState());
     }
   }
 
-  Future<List<PlayerInfo>> _playerInfoList() async {
+  void update(playerTag) {
+    log('updating player info, player_cubit.dart, update() ');
+    add(playerTag);
+  }
+
+  void swith(int index) => emit(PlayerLoadingState(index: index));
+
+  Future<List<PlayerInfo>> fplayerInfoList() async {
     List<String> tags = await getTags();
-    log('и тут норм _playerInfoList');
+    log('playerInfoList');
     if (tags.length != 0) {
       List<PlayerInfo> listPlayerInfo = await Future.wait(Iterable.generate(
           tags.length, (i) => sfDataBase.getJsonOfSF(tags[i])));
+      log(listPlayerInfo[0].toString());
       log(listPlayerInfo.length.toString() + '  _playerInfoList lenght');
       log(listPlayerInfo[0].expLevel.toString() + '  _playerInfoList');
       return listPlayerInfo;

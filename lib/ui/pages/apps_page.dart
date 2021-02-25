@@ -5,6 +5,7 @@ import 'package:clashofclans/repositories/constants.dart';
 import 'package:clashofclans/ui/pages/clan_page.dart';
 import 'package:clashofclans/ui/pages/guide_page.dart';
 import 'package:clashofclans/ui/pages/maps_page.dart';
+import 'package:clashofclans/ui/pages/profiles_page.dart';
 import 'package:clashofclans/ui/pages/settings_page.dart';
 import 'package:clashofclans/ui/pages/statistics_page.dart';
 import 'package:clashofclans/ui/widtets/drawer.dart';
@@ -16,12 +17,13 @@ class AppsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    themeData = Theme.of(context);
     deviceHeight = MediaQuery.of(context).size.height;
     deviceWidth = MediaQuery.of(context).size.width;
     themeCubit = context.watch<ThemeCubit>();
     playerCubitFunc = context.read<PlayerCubit>();
     return BlocBuilder<NavigationCubit, int>(
-      builder: (context, state)  {
+      builder: (context, state) {
         return Scaffold(
           drawer: MyDrawer(),
           appBar: _buildAppBar(state),
@@ -37,7 +39,7 @@ class AppsPage extends StatelessWidget {
       1: ClanPageAppBar(),
       2: MapsPageAppBar(),
       3: GuidePageAppBar(),
-      // 4: ProfilesPageAppBar(),
+      4: ProfilesPageAppBar(),
       5: SettingsPageAppBar(),
     };
     return _buildAppBarMap[index];
@@ -49,7 +51,7 @@ class AppsPage extends StatelessWidget {
       1: ClanPage(),
       2: MapsPage(),
       3: GuidePage(),
-      // 4: ProfilesPage(),
+      4: ProfilesPage(),
       5: SettingsPage(),
     };
     return _buildBodyMap[index];
@@ -57,7 +59,7 @@ class AppsPage extends StatelessWidget {
 }
 
 abstract class PrefAppBar implements PreferredSizeWidget {
-  final Color appBarColor = Color.fromRGBO(94, 84, 82, 1);
+  final Color appBarColor = themeData.accentColor;
   @override
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 }

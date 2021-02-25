@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:clashofclans/repositories/json/json_players.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,6 +7,7 @@ class SFDataBase {
   Future<void> addJsonToSF(String playerTag) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     PlayerInfo _playerInfo = await GetPlayerInfo().getData('$playerTag');
+    log(_playerInfo.toString());
     prefs.setString(playerTag, jsonEncode(_playerInfo));
   }
 
@@ -26,7 +28,7 @@ class SFDataBase {
   Future<List<String>> getSFTagList() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> tagSF = prefs.getKeys().toList();
-    // log(tagSF.toList().toString() + '  data_base.dart log of getSFTagList');
+    //log(tagSF.toList().toString() + '  data_base.dart log of getSFTagList');
     return tagSF;
   }
 }

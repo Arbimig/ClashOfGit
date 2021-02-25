@@ -1,83 +1,74 @@
-import 'dart:convert';
 import 'dart:developer';
+
+import 'package:clashofclans/bloc/player_cubit_json/player_cubit.dart';
 import 'package:clashofclans/bloc/player_cubit_json/player_cubit_state.dart';
 import 'package:clashofclans/repositories/constants.dart';
 import 'package:clashofclans/repositories/database/data_base.dart';
-import 'package:clashofclans/repositories/json/json_players.dart';
 import 'package:clashofclans/ui/pages/apps_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-// ignore: must_be_immutable
 class ProfilesPage extends StatelessWidget {
-  TextEditingController textEditingController = TextEditingController();
-  SFDataBase sfDataBase = SFDataBase();
+  final SFDataBase sfDataBase = SFDataBase();
+  final TextEditingController textEditingController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return BlocBuilder<PlayerCubit, PlayerState>(builder: (context, state) {
+      if (state is PlayerLoadingState) {
+        return Column(
+          children: [
+            addCard(context),
+            FutureBuilder(
+              future: playerCubitFunc.fplayerInfoList(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return infoCard(context, data: snapshot.data);
+                }
+                return Container();
+              },
+            ),
+          ],
+        );
+      }
+
+      if (state is PlayerErrorState) {
+        return Column(
+          children: [
+            errorAddCard(context),
+            FutureBuilder(
+              future: playerCubitFunc.fplayerInfoList(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return infoCard(context, data: snapshot.data);
+                }
+                return Container();
+              },
+            ),
+          ],
+        );
+      }
+      return Container();
+    });
   }
 
-  Widget sfDataBasePlayerList(BuildContext context, {PlayerState state}) {
-    return Expanded(
-      child: Container(
-        child: FutureBuilder(
-          future: sfDataBase.getSFTagList(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            var keysLenght = snapshot.data.toList().length;
-            var keys = snapshot.data.toList();
-            log(keysLenght.toString() + '  futurebuilderLenght');
-            log(keys.toString() + '  futurebuilderkeys');
-            if (snapshot.hasData) {
-              return ListView.builder(
-                itemCount: keysLenght,
-                itemBuilder: (BuildContext context, int index) {
-                  return FutureBuilder(
-                    future: sfDataBase.getJsonOfSF('${keys[index]}'),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<dynamic> snapshot) {
-                      if (snapshot.hasData) {
-                        final PlayerInfo _playerInfo =
-                            PlayerInfo.fromJson(json.decode(snapshot.data));
-                        PlayerInfo data = _playerInfo;
-                        return Card(
-                          child: InkWell(
-                            onLongPress: () {
-                              showAlertDialog(context, keys[index]);
-                              log(keys[index] + 'showAlertDialog PlayerTag');
-                            },
-                            child: Center(
-                                child: Container(
-                              width: deviceWidth * 0.9,
-                              height: deviceHeight * 0.1,
-                              child: ListTile(
-                                trailing: Container(
-                                    width: deviceHeight * 0.08,
-                                    height: deviceHeight * 0.08,
-                                    child: Image.network(
-                                        '${data.league.iconUrls.medium}')),
-                                title: Text(
-                                  '${data.name}',
-                                  style: TextStyle(fontWeight: FontWeight.w300),
-                                ),
-                                subtitle: Text(
-                                  '${data.tag}',
-                                  style: TextStyle(fontWeight: FontWeight.w300),
-                                ),
-                              ),
-                            )),
-                          ),
-                        );
-                      }
-                      return Center(child: CircularProgressIndicator());
-                    },
-                  );
-                },
-              );
-            } else {
-              return Center(child: Text('error'));
-            }
-          },
-        ),
+  Widget errorAddCard(BuildContext context) {
+    return Card(
+      color: Colors.red[50],
+      child: InkWell(
+        onTap: null,
+        child: Center(
+            child: Container(
+          width: deviceWidth * 0.9,
+          height: deviceHeight * 0.07,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Add player', style: TextStyle(fontWeight: FontWeight.w300)),
+              Icon(Icons.add),
+            ],
+          ),
+        )),
       ),
     );
   }
@@ -85,6 +76,10 @@ class ProfilesPage extends StatelessWidget {
   Widget addCard(BuildContext context) {
     return Card(
       child: InkWell(
+        onLongPress: () async {
+          var tags = await playerCubitFunc.getTags();
+          log(tags.toString());
+        },
         onTap: () {
           _displayTextInputDialog(context);
         },
@@ -104,11 +99,59 @@ class ProfilesPage extends StatelessWidget {
     );
   }
 
+  Widget infoCard(BuildContext context, {@required var data}) {
+    return Expanded(
+      child: Container(
+        child: ListView.builder(
+          itemCount: data.length,
+          itemBuilder: (context, i) {
+            return Card(
+              child: InkWell(
+                onTap: () async {
+                  var tags = await playerCubitFunc.getTags();
+                  var indexwhere =
+                      tags.indexWhere((note) => note.startsWith(tags[i]));
+                  playerCubitFunc.swith(indexwhere);
+                },
+                onLongPress: () async {
+                  var tags = await playerCubitFunc.getTags();
+                  log(tags.toString());
+                  showAlertDialog(context, tags[i]);
+                },
+                child: Center(
+                    child: Container(
+                  width: deviceWidth * 0.9,
+                  height: deviceHeight * 0.1,
+                  child: ListTile(
+                    trailing: Container(
+                        width: deviceHeight * 0.08,
+                        height: deviceHeight * 0.08,
+                        child:
+                            Image.network('${data[i].league.iconUrls.medium}')),
+                    title: Text(
+                      '${data[i].name}',
+                      style: TextStyle(fontWeight: FontWeight.w300),
+                    ),
+                    subtitle: Text(
+                      '${data[i].tag}',
+                      style: TextStyle(fontWeight: FontWeight.w300),
+                    ),
+                  ),
+                )),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   showAlertDialog(BuildContext context, String playerTag) {
     // set up the button
     Widget deleteButton = FlatButton(
       child: Text("Delete"),
       onPressed: () {
+        playerCubitFunc.delete(playerTag);
         Navigator.pop(context);
       },
     );
@@ -167,8 +210,7 @@ class ProfilesPage extends StatelessWidget {
       _formKey.currentState.save();
 
       final playerTag = textEditingController.value.text.replaceAll('#', '');
-
-      print(playerTag);
+      playerCubitFunc.add(playerTag);
       Navigator.pop(context);
     } else {
       return print('Error validate');
@@ -184,16 +226,27 @@ class ProfilesPage extends StatelessWidget {
       return null;
     }
   }
-
 }
 
 class ProfilesPageAppBar extends StatelessWidget with PrefAppBar {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: appBarColor,
-      title: Text('Profiles page'),
-      actions: [],
+      title: Text(
+        'Profiles page',
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.white),
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.wb_sunny_outlined),
+          onPressed: () {
+            themeCubit.toggleTheme();
+          },
+        ),
+        IconButton(icon: Icon(Icons.web),onPressed: () {})
+      ],
       centerTitle: true,
     );
   }

@@ -4,7 +4,7 @@ import 'package:clashofclans/bloc/navigation_cubit.dart';
 import 'package:clashofclans/bloc/player_cubit_json/player_cubit.dart';
 import 'package:clashofclans/bloc/player_cubit_json/player_cubit_state.dart';
 import 'package:clashofclans/repositories/constants.dart';
-import 'package:clashofclans/repositories/json/json_players.dart';
+import 'package:clashofclans/repositories/json/player_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +16,7 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     var getPage = context.read<NavigationCubit>();
     return SafeArea(
       child: Drawer(

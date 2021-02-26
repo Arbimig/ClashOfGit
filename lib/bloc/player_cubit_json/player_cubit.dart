@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:clashofclans/bloc/player_cubit_json/player_cubit_state.dart';
 import 'package:clashofclans/repositories/database/data_base.dart';
-import 'package:clashofclans/repositories/json/json_players.dart';
+import 'package:clashofclans/repositories/json/player_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class PlayerCubit extends Cubit<PlayerState> {
   PlayerCubit() : super(PlayerLoadingState());
@@ -29,10 +29,9 @@ class PlayerCubit extends Cubit<PlayerState> {
     }
   }
 
-  void add(playerTag) async {
+  void add(String playerTag) async {
     try {
       await sfDataBase.addJsonToSF(playerTag);
-
       log('adding player info, player_cubit.dart, add() ');
       emit(PlayerLoadingState());
     } catch (e) {

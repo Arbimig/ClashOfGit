@@ -7,4 +7,5 @@ class PlayerLoadingState extends PlayerState {
 }
 
 
-class PlayerErrorState extends PlayerState {}
+class PlayerErrorState extends PlayerState {
+}

@@ -4,6 +4,7 @@ import 'package:clashofclans/ui/pages/apps_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/navigation_cubit.dart';
+import 'package:clashofclans/bloc/timer_cubit.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => PlayerCubit(),
+        ),
+        BlocProvider(
+          create: (_) => TimerCubit(),
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeData>(

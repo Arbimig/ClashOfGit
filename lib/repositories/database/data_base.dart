@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:clashofclans/repositories/json/json_players.dart';
+import 'package:clashofclans/repositories/json/player_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SFDataBase {
   Future<void> addJsonToSF(String playerTag) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    PlayerInfo _playerInfo = await GetPlayerInfo().getData('$playerTag');
+    PlayerInfo _playerInfo = await GetPlayerInfo().getData('${playerTag.replaceAll('#', '')}');
     log(_playerInfo.toString());
     prefs.setString(playerTag, jsonEncode(_playerInfo));
   }

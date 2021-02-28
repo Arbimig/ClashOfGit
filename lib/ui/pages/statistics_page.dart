@@ -2,10 +2,11 @@ import 'package:clashofclans/bloc/player_cubit_json/player_cubit.dart';
 import 'package:clashofclans/bloc/player_cubit_json/player_cubit_state.dart';
 import 'package:clashofclans/repositories/constants.dart';
 import 'package:clashofclans/repositories/database/data_base.dart';
-import 'package:clashofclans/repositories/database/troops_constant.dart';
+import 'package:clashofclans/repositories/database/army_constant.dart';
 import 'package:clashofclans/repositories/json/player_info.dart';
 import 'package:clashofclans/ui/pages/apps_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StatisticsPage extends StatelessWidget {
@@ -14,33 +15,95 @@ class StatisticsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<PlayerCubit, PlayerState>(builder: (context, state) {
       if (state is PlayerLoadingState) {
-        return Container(
-          child: FutureBuilder(
-            future: playerCubitFunc.fplayerInfoList(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                PlayerInfo data =
-                    snapshot.data[state.index == null ? 0 : state.index];
-                return Column(
-                  children: [
-                    statistics(data),
-                    // achievements(data),
-                    army(data.troops),
-                    army(data.spells),
-                    army(data.heroes),
-                  ],
-                );
-              }
-              return Container();
-            },
-          ),
-        );
+        return TabBarView(children: [
+          Center(child: Text('home')),
+          builderBasePage(state),
+          achievementsPage(state),
+        ]);
       }
-
       return Container();
     });
   }
 
+  Widget homePage(state) {}
+  Widget builderBasePage(state) {
+    return Container(
+      child: FutureBuilder(
+        future: playerCubitFunc.fplayerInfoList(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            PlayerInfo data =
+                snapshot.data[state.index == null ? 0 : state.index];
+            return Column(
+              children: [
+                // statistics(data),
+                achievements(data),
+                // army(data.troops),
+                // army(data.spells),
+                // army(data.heroes),
+              ],
+            );
+          }
+          return Container();
+        },
+      ),
+    );
+  }
+
+  Widget achievementsPage(state) {
+    return Container(
+      child: FutureBuilder(
+        future: playerCubitFunc.fplayerInfoList(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            PlayerInfo data =
+                snapshot.data[state.index == null ? 0 : state.index];
+            return Column(
+              children: [
+                achievements(data),
+              ],
+            );
+          }
+          return Container();
+        },
+      ),
+    );
+  }
+
+  homeVillage(PlayerInfo data) => Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Container(
+          height: deviceHeight * 0.3,
+          width: deviceWidth * 0.35,
+          child: Column(
+            children: [
+              Container(
+                height: 50,
+                width: 50,
+                child: Image.network(data.league.iconUrls.medium),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'townHall level ${data.townHallLevel}',
+                style: themeData.textTheme.headline2,
+              ),
+              SizedBox(height: 10),
+              Text(
+                'trophies ${data.trophies}',
+                style: themeData.textTheme.headline2,
+              ),
+              SizedBox(height: 10),
+              Text(
+                'best trophies ${data.bestTrophies}',
+                style: themeData.textTheme.headline2,
+              ),
+            ],
+          ),
+        ),
+      );
   statistics(PlayerInfo data) => Padding(
         padding: const EdgeInsets.all(10.0),
         child: Card(
@@ -56,14 +119,27 @@ class StatisticsPage extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              '${data.expLevel}',
-                              style: TextStyle(
-                                  color: themeData.textTheme.headline1.color,
-                                  fontWeight: FontWeight.w100,
-                                  fontSize: 30),
+                            Container(
+                              height: 50,
+                              width: 50,
+                              child: Stack(children: [
+                                Center(
+                                  child: Image.asset(
+                                      'assets/icons/statistics/level-back.png'),
+                                ),
+                                Center(
+                                  child: Text(
+                                    '${data.expLevel}',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 16),
+                                  ),
+                                ),
+                              ]),
                             ),
-                            SizedBox(width: 20),
+                            SizedBox(width: 5),
                             Column(
                               children: [
                                 Text(
@@ -76,28 +152,31 @@ class StatisticsPage extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            IconButton(
+                                icon: Icon(Icons.share_outlined),
+                                splashRadius: 20,
+                                splashColor: themeData.accentColor,
+                                iconSize: 18,
+                                color: themeData.primaryColor.withOpacity(0.8),
+                                onPressed: () {
+                                  Clipboard.setData(
+                                      new ClipboardData(text: data.tag));
+                                }),
                           ],
                         ),
-                        Container(
-                          height: 50,
-                          width: 50,
-                          child:
-                              Image.network('${data.league.iconUrls.medium}'),
-                        )
                       ],
                     ),
                     Column(
                       children: [
                         Row(
                           children: [
-                            Text(
-                              '${data.clan.clanLevel}',
-                              style: TextStyle(
-                                  color: themeData.textTheme.headline1.color,
-                                  fontWeight: FontWeight.w100,
-                                  fontSize: 30),
+                            Container(
+                              height: 50,
+                              width: 50,
+                              child:
+                                  Image.network('${data.clan.badgeUrls.large}'),
                             ),
-                            SizedBox(width: 20),
+                            SizedBox(width: 5),
                             Column(
                               children: [
                                 Text(
@@ -110,18 +189,45 @@ class StatisticsPage extends StatelessWidget {
                                 ),
                               ],
                             ),
+                            IconButton(
+                                splashRadius: 20,
+                                splashColor: themeData.accentColor,
+                                icon: Icon(Icons.share_outlined),
+                                iconSize: 18,
+                                color: themeData.primaryColor.withOpacity(0.8),
+                                onPressed: () {
+                                  Clipboard.setData(
+                                      new ClipboardData(text: data.clan.tag));
+                                })
                           ],
-                        ),
-                        Container(
-                          height: 50,
-                          width: 50,
-                          child: Image.network('${data.clan.badgeUrls.large}'),
                         ),
                       ],
                     ),
                   ],
                 ),
-              )
+              ),
+              data.labels.length != null
+                  ? Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: data.labels.length,
+                            itemBuilder: (context, i) {
+                              var labels = data.labels[i];
+                              return Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  child: Image.network(
+                                      '${labels.iconUrls.medium}'),
+                                ),
+                              );
+                            }),
+                      ),
+                    )
+                  : SizedBox(),
             ]),
           ),
         ),
@@ -206,7 +312,10 @@ class StatisticsPage extends StatelessWidget {
                                           Colors.yellow[800].withOpacity(0.2),
                                           Colors.yellow[600].withOpacity(0.05),
                                         ]
-                                      : [null])),
+                                      : [
+                                          Colors.black.withOpacity(0),
+                                          Colors.black.withOpacity(0)
+                                        ])),
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -285,10 +394,25 @@ class StatisticsPage extends StatelessWidget {
 
 class StatisticsAppBar extends StatelessWidget with PrefAppBar {
   @override
+  Size get preferredSize =>
+      Size.fromHeight(AppBar().preferredSize.height * 1.5);
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: appBarColor,
+      bottom: TabBar(
+        tabs: [
+          Tab(
+            text: 'Home',
+          ),
+          Tab(
+            text: 'Bulder base',
+          ),
+          Tab(
+            text: 'Achievements',
+          )
+        ],
+      ),
       title: Text(
         'Statistics',
         style: TextStyle(

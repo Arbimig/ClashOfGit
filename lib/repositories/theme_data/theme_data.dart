@@ -8,6 +8,8 @@ final ThemeData lightTheme = ThemeData(
       foregroundColor: Colors.white,
     ),
     canvasColor: Colors.grey[200],
+    
+    splashColor: Color.fromRGBO(94, 84, 82, 1),
     // dividerColor: Colors.white,
     textTheme: TextTheme(
       caption: TextStyle(

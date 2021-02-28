@@ -54,6 +54,8 @@ flutter:
     - assets/icons/troops/
     - assets/icons/heroes/
     - assets/icons/spells/
+    - assets/icons/statistics/
+    - assets/icons/builder_base/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

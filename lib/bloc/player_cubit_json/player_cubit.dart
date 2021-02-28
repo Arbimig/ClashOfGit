@@ -46,7 +46,7 @@ class PlayerCubit extends Cubit<PlayerState> {
   }
 
   void swith(int index) => emit(PlayerLoadingState(index: index));
-
+///Swithed player account by index
   Future<List<PlayerInfo>> fplayerInfoList() async {
     List<String> tags = await getTags();
     log('playerInfoList');

@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
         builder: (_, theme) {
           return MaterialApp(
             theme: theme,
-            home: AppsPage(),
+            home: DefaultTabController(length: 3,
+            child: AppsPage()),
           );
         },
       ),

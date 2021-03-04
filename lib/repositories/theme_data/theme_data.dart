@@ -7,7 +7,7 @@ final ThemeData lightTheme = ThemeData(
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       foregroundColor: Colors.white,
     ),
-    canvasColor: Colors.grey[200],
+    canvasColor: Colors.grey[300],
     
     splashColor: Color.fromRGBO(94, 84, 82, 1),
     // dividerColor: Colors.white,

@@ -16,8 +16,9 @@ class StatisticsPage extends StatelessWidget {
     return BlocBuilder<PlayerCubit, PlayerState>(builder: (context, state) {
       if (state is PlayerLoadingState) {
         return TabBarView(children: [
-          Center(child: Text('home')),
-          builderBasePage(state, ),
+          homePage(state),
+          builderBasePage(state),
+          clanPage(state),
           achievementsPage(state),
         ]);
       }
@@ -25,8 +26,7 @@ class StatisticsPage extends StatelessWidget {
     });
   }
 
-  Widget homePage(state) {}
-  Widget builderBasePage(state) {
+  Widget clanPage(state) {
     return Container(
       child: FutureBuilder(
         future: playerCubitFunc.fplayerInfoList(),
@@ -36,11 +36,105 @@ class StatisticsPage extends StatelessWidget {
                 snapshot.data[state.index == null ? 0 : state.index];
             return Column(
               children: [
-                statistics(data),
-                // achievements(data),
-                army(data.troops, 'home'),
-                // army(data.spells),
-                // army(data.heroes),
+                clanStatistics(data),
+              ],
+            );
+          }
+          return Container();
+        },
+      ),
+    );
+  }
+
+  Widget homePage(state) {
+    return Container(
+      child: FutureBuilder(
+        future: playerCubitFunc.fplayerInfoList(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            PlayerInfo data =
+                snapshot.data[state.index == null ? 0 : state.index];
+
+            return CustomScrollView(
+              physics: BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: playerStatistics(data),
+                ),
+                SliverToBoxAdapter(
+                  child: ListTile(
+                      title: Text(
+                    'Troops',
+                    style: themeData.textTheme.headline1,
+                  )),
+                ),
+                armySliverGrid(context, data.troops, 'home'),
+                SliverToBoxAdapter(
+                  child: ListTile(
+                      title: Text(
+                    'Spells',
+                    style: themeData.textTheme.headline1,
+                  )),
+                ),
+                armySliverGrid(context, data.spells, 'home'),
+                SliverToBoxAdapter(
+                  child: ListTile(
+                      title: Text(
+                    'Heroes',
+                    style: themeData.textTheme.headline1,
+                  )),
+                ),
+                armySliverGrid(context, data.heroes, 'home'),
+              ],
+            );
+          }
+          return Container();
+        },
+      ),
+    );
+  }
+
+  Widget builderBasePage(state) {
+    return Container(
+      child: FutureBuilder(
+        future: playerCubitFunc.fplayerInfoList(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            PlayerInfo data =
+                snapshot.data[state.index == null ? 0 : state.index];
+
+            return CustomScrollView(
+              physics: BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
+              slivers: [
+                SliverToBoxAdapter(
+                  child: playerStatistics(data),
+                ),
+                SliverToBoxAdapter(
+                  child: ListTile(
+                      title: Text(
+                    'Troops',
+                    style: themeData.textTheme.headline1,
+                  )),
+                ),
+                armySliverGrid(context, data.troops, 'builderBase'),
+                SliverToBoxAdapter(
+                  child: ListTile(
+                      title: Text(
+                    'Spells',
+                    style: themeData.textTheme.headline1,
+                  )),
+                ),
+                armySliverGrid(context, data.spells, 'builderBase'),
+                SliverToBoxAdapter(
+                  child: ListTile(
+                      title: Text(
+                    'Heroes',
+                    style: themeData.textTheme.headline1,
+                  )),
+                ),
+                armySliverGrid(context, data.heroes, 'builderBase'),
               ],
             );
           }
@@ -68,6 +162,129 @@ class StatisticsPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget armySliverGrid(
+      BuildContext context, List<dynamic> data, String village) {
+    return SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount:
+                mediaQueryData.orientation == Orientation.portrait ? 4 : 8),
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            if (data[index].village == village) {
+              var datat = data[index];
+              return Container(
+                padding: EdgeInsets.all(1),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 5,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      children: [
+                        Image.asset(
+                          data is List<Troops>
+                              ? troopsDB[datat.name]
+                              : data is List<Spells>
+                                  ? spellsDB[datat.name]
+                                  : data is List<Heroes>
+                                      ? heroesDB[datat.name]
+                                      : troopsDB[datat.name],
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomLeft,
+                                  colors: datat.level == datat.maxLevel
+                                      ? [
+                                          Colors.yellow[800].withOpacity(0.2),
+                                          Colors.yellow[600].withOpacity(0.05),
+                                        ]
+                                      : [
+                                          Colors.black.withOpacity(0),
+                                          Colors.black.withOpacity(0)
+                                        ])),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                Colors.black45,
+                                Colors.black.withOpacity(0),
+                              ])),
+                        ),
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              boxShadow: datat.level == datat.maxLevel
+                                  ? [
+                                      BoxShadow(
+                                        color: Colors.yellow[600],
+                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                      ),
+                                    ]
+                                  : [
+                                      BoxShadow(
+                                        color: themeData.accentColor
+                                            .withOpacity(0.5),
+                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                      ),
+                                    ],
+                              borderRadius: BorderRadius.circular(4),
+                              gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: datat.level == datat.maxLevel
+                                      ? [
+                                          Colors.yellow[600].withOpacity(0.2),
+                                          Colors.yellow[800]
+                                        ]
+                                      : [
+                                          themeData.accentColor
+                                              .withOpacity(0.5),
+                                          themeData.accentColor,
+                                        ]),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${datat.level}',
+                                style: themeData.textTheme.caption,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 2,
+                          left: 3,
+                          child: Text(
+                            '${datat.name}',
+                            style: themeData.textTheme.caption,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            } else{
+              return Container();
+            }
+          },
+          childCount: data.length,
+        ));
   }
 
   homeVillage(PlayerInfo data) => Card(
@@ -105,7 +322,173 @@ class StatisticsPage extends StatelessWidget {
         ),
       );
 
-  statistics(PlayerInfo data) => Padding(
+  clanStatistics(PlayerInfo data) => Card(
+        child: Container(
+          color: Colors.grey[600],
+          height: deviceHeight * 0.2,
+          width: deviceWidth * 0.95,
+          child: Column(children: [
+            Row(
+              children: [
+                Container(
+                  width: deviceWidth * 0.5,
+                  color: Colors.grey[400],
+                  child: ListTile(
+                    title: Text(
+                      '${data.clan.name}',
+                      style: themeData.textTheme.headline1,
+                    ),
+                    subtitle: Text(
+                      '${data.clan.tag}',
+                      style: themeData.textTheme.headline3,
+                    ),
+                    leading: Container(
+                        height: 50,
+                        width: 50,
+                        child: Image.network('${data.clan.badgeUrls.large}')),
+                    trailing: IconButton(
+                        splashRadius: 20,
+                        splashColor: themeData.accentColor,
+                        icon: Icon(Icons.share_outlined),
+                        iconSize: 18,
+                        color: themeData.primaryColor.withOpacity(0.8),
+                        onPressed: () {
+                          Clipboard.setData(
+                              new ClipboardData(text: data.clan.tag));
+                        }),
+                  ),
+                ),
+                // Container(
+                //    width: deviceWidth * 0.4,
+                //   color: Colors.grey[500],
+                //   child: ListTile(
+                //     title: Text(
+                //       '${data.clan.name}',
+                //       style: themeData.textTheme.headline1,
+                //     ),
+                //     subtitle: Text(
+                //       '${data.clan.tag}',
+                //       style: themeData.textTheme.headline3,
+                //     ),
+                //     leading: Container(
+                //       height: 50,
+                //       width: 50,
+                //       child: Image.network('${data.clan.badgeUrls.large}')),
+                //     trailing: IconButton(
+                //         splashRadius: 20,
+                //         splashColor: themeData.accentColor,
+                //         icon: Icon(Icons.share_outlined),
+                //         iconSize: 18,
+                //         color: themeData.primaryColor.withOpacity(0.8),
+                //         onPressed: () {
+                //           Clipboard.setData(
+                //               new ClipboardData(text: data.clan.tag));
+                //         }),
+                //   ),
+                // ),
+              ],
+            ),
+            // data.labels.length != null
+            //     ? Expanded(
+            //         child: Container(
+            //           padding: EdgeInsets.all(5),
+            //           child: ListView.builder(
+            //               scrollDirection: Axis.horizontal,
+            //               itemCount: data.labels.length,
+            //               itemBuilder: (context, i) {
+            //                 var labels = data.labels[i];
+            //                 return Padding(
+            //                   padding: const EdgeInsets.all(4.0),
+            //                   child: Container(
+            //                     height: 40,
+            //                     width: 40,
+            //                     child: Image.network(
+            //                         '${labels.iconUrls.medium}'),
+            //                   ),
+            //                 );
+            //               }),
+            //         ),
+            //       )
+            //     : SizedBox(),
+          ]),
+        ),
+      );
+
+  playerStatistics(PlayerInfo data) => Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: Card(
+          elevation: 2.0,
+          child: Container(
+            width: deviceWidth * 0.9,
+            height: deviceHeight * 0.2,
+            child: Column(children: [
+              ListTile(
+                title: Text(
+                  '${data.name}',
+                  style: themeData.textTheme.headline1,
+                ),
+                subtitle: Text(
+                  '${data.tag}',
+                  style: themeData.textTheme.headline3,
+                ),
+                leading: Container(
+                  height: 50,
+                  width: 50,
+                  child: Stack(children: [
+                    Center(
+                      child:
+                          Image.asset('assets/icons/statistics/level-back.png'),
+                    ),
+                    Center(
+                      child: Text(
+                        '${data.expLevel}',
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 16),
+                      ),
+                    ),
+                  ]),
+                ),
+                trailing: IconButton(
+                    splashRadius: 20,
+                    splashColor: themeData.accentColor,
+                    icon: Icon(Icons.share_outlined),
+                    iconSize: 18,
+                    color: themeData.primaryColor.withOpacity(0.8),
+                    onPressed: () {
+                      Clipboard.setData(new ClipboardData(text: data.clan.tag));
+                    }),
+              ),
+              data.labels.length != null
+                  ? Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(5),
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: data.labels.length,
+                            itemBuilder: (context, i) {
+                              var labels = data.labels[i];
+                              return Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  child: Image.network(
+                                      '${labels.iconUrls.medium}'),
+                                ),
+                              );
+                            }),
+                      ),
+                    )
+                  : SizedBox(),
+            ]),
+          ),
+        ),
+      );
+
+  statistics1(PlayerInfo data) => Padding(
         padding: const EdgeInsets.all(10.0),
         child: Card(
           child: Container(
@@ -272,129 +655,123 @@ class StatisticsPage extends StatelessWidget {
         ),
       );
 
-  army(List<dynamic> data, String page) => Expanded(
+  army(List<dynamic> data) => Expanded(
         ///Takes values `Heroes`, `Spells`,  `Troops`.
         child: Container(
           child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 4,
-              ),
-              itemCount: data.length,
-              itemBuilder: (context, i) {
-                var pagedata = data[i];
-                if (pagedata == page) {
-                  var datat = pagedata;
-                  return Container(
-                    padding: EdgeInsets.all(1),
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      elevation: 5,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Stack(
-                          alignment: Alignment.bottomLeft,
-                          children: [
-                            Image.asset(
-                              data is List<Troops>
-                                  ? troopsDB[datat.name]
-                                  : data is List<Spells>
-                                      ? spellsDB[datat.name]
-                                      : data is List<Heroes>
-                                          ? heroesDB[datat.name]
-                                          : troopsDB[datat.name],
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topRight,
-                                      end: Alignment.bottomLeft,
-                                      colors: datat.level == datat.maxLevel
-                                          ? [
-                                              Colors.yellow[800]
-                                                  .withOpacity(0.2),
-                                              Colors.yellow[600]
-                                                  .withOpacity(0.05),
-                                            ]
-                                          : [
-                                              Colors.black.withOpacity(0),
-                                              Colors.black.withOpacity(0)
-                                            ])),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      colors: [
-                                    Colors.black45,
-                                    Colors.black.withOpacity(0),
-                                  ])),
-                            ),
-                            Positioned(
-                              top: 5,
-                              right: 5,
-                              child: Container(
-                                height: 20,
-                                width: 20,
-                                decoration: BoxDecoration(
-                                  boxShadow: datat.level == datat.maxLevel
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+            ),
+            itemCount: data.length,
+            itemBuilder: (context, i) {
+              var datat = data[i];
+              return Container(
+                padding: EdgeInsets.all(1),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 5,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      children: [
+                        Image.asset(
+                          data is List<Troops>
+                              ? troopsDB[datat.name]
+                              : data is List<Spells>
+                                  ? spellsDB[datat.name]
+                                  : data is List<Heroes>
+                                      ? heroesDB[datat.name]
+                                      : troopsDB[datat.name],
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomLeft,
+                                  colors: datat.level == datat.maxLevel
                                       ? [
-                                          BoxShadow(
-                                            color: Colors.yellow[600],
-                                            blurRadius: 5,
-                                            spreadRadius: 1,
-                                          ),
+                                          Colors.yellow[800].withOpacity(0.2),
+                                          Colors.yellow[600].withOpacity(0.05),
                                         ]
                                       : [
-                                          BoxShadow(
-                                            color: themeData.accentColor
-                                                .withOpacity(0.5),
-                                            blurRadius: 5,
-                                            spreadRadius: 1,
-                                          ),
-                                        ],
-                                  borderRadius: BorderRadius.circular(4),
-                                  gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: datat.level == datat.maxLevel
-                                          ? [
-                                              Colors.yellow[600]
-                                                  .withOpacity(0.2),
-                                              Colors.yellow[800]
-                                            ]
-                                          : [
-                                              themeData.accentColor
-                                                  .withOpacity(0.5),
-                                              themeData.accentColor,
-                                            ]),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    '${datat.level}',
-                                    style: themeData.textTheme.caption,
-                                  ),
-                                ),
-                              ),
+                                          Colors.black.withOpacity(0),
+                                          Colors.black.withOpacity(0)
+                                        ])),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                Colors.black45,
+                                Colors.black.withOpacity(0),
+                              ])),
+                        ),
+                        Positioned(
+                          top: 5,
+                          right: 5,
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              boxShadow: datat.level == datat.maxLevel
+                                  ? [
+                                      BoxShadow(
+                                        color: Colors.yellow[600],
+                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                      ),
+                                    ]
+                                  : [
+                                      BoxShadow(
+                                        color: themeData.accentColor
+                                            .withOpacity(0.5),
+                                        blurRadius: 5,
+                                        spreadRadius: 1,
+                                      ),
+                                    ],
+                              borderRadius: BorderRadius.circular(4),
+                              gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: datat.level == datat.maxLevel
+                                      ? [
+                                          Colors.yellow[600].withOpacity(0.2),
+                                          Colors.yellow[800]
+                                        ]
+                                      : [
+                                          themeData.accentColor
+                                              .withOpacity(0.5),
+                                          themeData.accentColor,
+                                        ]),
                             ),
-                            Positioned(
-                              bottom: 2,
-                              left: 3,
+                            child: Center(
                               child: Text(
-                                '${datat.name}',
+                                '${datat.level}',
                                 style: themeData.textTheme.caption,
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
+                        Positioned(
+                          bottom: 2,
+                          left: 3,
+                          child: Text(
+                            '${datat.name}',
+                            style: themeData.textTheme.caption,
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                }
-                return SizedBox();
-              }),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       );
 }
@@ -414,6 +791,9 @@ class StatisticsAppBar extends StatelessWidget with PrefAppBar {
           ),
           Tab(
             text: 'Bulder base',
+          ),
+          Tab(
+            text: 'Clan',
           ),
           Tab(
             text: 'Achievements',

@@ -20,6 +20,7 @@ class AppsPage extends StatelessWidget {
     themeData = Theme.of(context);
     deviceHeight = MediaQuery.of(context).size.height;
     deviceWidth = MediaQuery.of(context).size.width;
+    mediaQueryData = MediaQuery.of(context);
     themeCubit = context.watch<ThemeCubit>();
     playerCubitFunc = context.read<PlayerCubit>();
     return BlocBuilder<NavigationCubit, int>(

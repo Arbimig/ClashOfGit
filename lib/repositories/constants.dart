@@ -7,3 +7,4 @@ double deviceWidth;
 ThemeData themeData;
 ThemeCubit themeCubit;
 PlayerCubit playerCubitFunc;
+MediaQueryData mediaQueryData;

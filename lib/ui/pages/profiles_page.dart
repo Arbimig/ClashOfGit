@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:clashofclans/bloc/player_cubit_json/player_cubit.dart';
 import 'package:clashofclans/bloc/player_cubit_json/player_cubit_state.dart';
+import 'package:clashofclans/bloc/swith_theme_cubit.dart';
 import 'package:clashofclans/repositories/constants.dart';
 import 'package:clashofclans/repositories/database/data_base.dart';
 import 'package:clashofclans/ui/pages/apps_page.dart';
@@ -15,6 +16,7 @@ class ProfilesPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    playerCubitFunc = context.read<PlayerCubit>();
     return BlocBuilder<PlayerCubit, PlayerState>(builder: (context, state) {
       if (state is PlayerLoadingState) {
         return Column(
@@ -149,14 +151,14 @@ class ProfilesPage extends StatelessWidget {
 
   showAlertDialog(BuildContext context, String playerTag) {
     // set up the button
-    Widget deleteButton = FlatButton(
+    Widget deleteButton = TextButton(
       child: Text("Delete"),
       onPressed: () {
         playerCubitFunc.delete(playerTag);
         Navigator.pop(context);
       },
     );
-    Widget closeButton = FlatButton(
+    Widget closeButton = TextButton(
       child: Text("Close"),
       onPressed: () {
         Navigator.pop(context);
@@ -205,6 +207,7 @@ class ProfilesPage extends StatelessWidget {
   }
 
   void _submitForm(BuildContext context, TimerCubit timer) {
+    playerCubitFunc = context.read<PlayerCubit>();
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       final playerTag = textEditingController.value.text;
@@ -233,6 +236,7 @@ class ProfilesPage extends StatelessWidget {
 class ProfilesPageAppBar extends StatelessWidget with PrefAppBar {
   @override
   Widget build(BuildContext context) {
+        themeCubit = context.watch<ThemeCubit>();
     return AppBar(
       iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: appBarColor,
@@ -245,6 +249,7 @@ class ProfilesPageAppBar extends StatelessWidget with PrefAppBar {
         IconButton(
           icon: Icon(Icons.wb_sunny_outlined),
           onPressed: () {
+            
             themeCubit.toggleTheme();
           },
         ),

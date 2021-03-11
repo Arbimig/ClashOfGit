@@ -16,6 +16,7 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    playerCubitFunc = context.read<PlayerCubit>();
     
     var getPage = context.read<NavigationCubit>();
     return SafeArea(

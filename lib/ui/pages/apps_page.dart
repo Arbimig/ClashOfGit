@@ -1,6 +1,4 @@
-import 'package:clashofclans/bloc/navigation_cubit.dart';
-import 'package:clashofclans/bloc/player_cubit_json/player_cubit.dart';
-import 'package:clashofclans/bloc/swith_theme_cubit.dart';
+import 'package:clashofclans/bloc/navigation_cubit.dart';   
 import 'package:clashofclans/repositories/constants.dart';
 import 'package:clashofclans/ui/pages/clan_page.dart';
 import 'package:clashofclans/ui/pages/guide_page.dart';
@@ -21,8 +19,6 @@ class AppsPage extends StatelessWidget {
     deviceHeight = MediaQuery.of(context).size.height;
     deviceWidth = MediaQuery.of(context).size.width;
     mediaQueryData = MediaQuery.of(context);
-    themeCubit = context.watch<ThemeCubit>();
-    playerCubitFunc = context.read<PlayerCubit>();
     return BlocBuilder<NavigationCubit, int>(
       builder: (context, state) {
         return Scaffold(

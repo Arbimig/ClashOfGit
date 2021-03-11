@@ -10,6 +10,13 @@ void main() {
   runApp(MyApp());
 }
 
+class Student {
+  final String name;
+  final int ecz;
+  final int ecz5;
+  Student({this.name, this.ecz, this.ecz5});
+}
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -32,8 +39,7 @@ class MyApp extends StatelessWidget {
         builder: (_, theme) {
           return MaterialApp(
             theme: theme,
-            home: DefaultTabController(length: 4,
-            child: AppsPage()),
+            home: DefaultTabController(length: 3, child: AppsPage()),
           );
         },
       ),

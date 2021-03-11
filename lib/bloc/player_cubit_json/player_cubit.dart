@@ -5,7 +5,6 @@ import 'package:clashofclans/repositories/database/data_base.dart';
 import 'package:clashofclans/repositories/json/player_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class PlayerCubit extends Cubit<PlayerState> {
   PlayerCubit() : super(PlayerLoadingState());
 
@@ -46,17 +45,29 @@ class PlayerCubit extends Cubit<PlayerState> {
   }
 
   void swith(int index) => emit(PlayerLoadingState(index: index));
-///Swithed player account by index
+
+  ///Swithed player account by index
+
   Future<List<PlayerInfo>> fplayerInfoList() async {
     List<String> tags = await getTags();
     log('playerInfoList');
     if (tags.length != 0) {
       List<PlayerInfo> listPlayerInfo = await Future.wait(Iterable.generate(
           tags.length, (i) => sfDataBase.getJsonOfSF(tags[i])));
-      log(listPlayerInfo[0].toString());
-      log(listPlayerInfo.length.toString() + '  _playerInfoList lenght');
-      log(listPlayerInfo[0].expLevel.toString() + '  _playerInfoList');
       return listPlayerInfo;
+    } else {
+      return null;
+    }
+  }
+
+  Future<PlayerInfo> fplayerInfo(i) async {
+    List<String> tags = await getTags();
+    log('playerInfoList');
+    print(tags.length);
+    if (tags.length != 0) {
+      PlayerInfo playerInfo = await sfDataBase.getJsonOfSF(tags[i]);
+      log(playerInfo.name);
+      return playerInfo;
     } else {
       return null;
     }

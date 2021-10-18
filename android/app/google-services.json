@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "223255799088",
+    "project_id": "clash-of-super-d51b4",
+    "storage_bucket": "clash-of-super-d51b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:223255799088:android:8243ed220e523c576094f5",
+        "android_client_info": {
+          "package_name": "com.jeadsoft.clashofsuper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "223255799088-ulka2dcvs2ig0us7jbjn115nk9pcmsaf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jeadsoft.clashofsuper",
+            "certificate_hash": "521f0a93498a73ce5e7304be9df55bc7ce366dbe"
+          }
+        },
+        {
+          "client_id": "223255799088-agasmlfl3udnb4sslot2nr96ci1j8hrq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVJrrZlquPgnH34jcFaEcUw8Fxf9MsvdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "223255799088-agasmlfl3udnb4sslot2nr96ci1j8hrq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

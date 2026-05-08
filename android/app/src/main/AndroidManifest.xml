@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.clashofclans">
+    package="com.jeadsoft.clashofsuper">
     <application
         android:name="${applicationName}"
         android:label="clashofclans"

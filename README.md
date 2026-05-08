@@ -1,16 +1,35 @@
-# clashofclans
+# ClashOfGit
 
-A new Flutter project.
+Flutter-приложение для просмотра статистики игроков и кланов в Clash of Clans.
 
-## Getting Started
+## Описание
 
-This project is a starting point for a Flutter application.
+Приложение позволяет искать игроков и кланы по тегу, просматривать их статистику, состав армии, достижения и базы. Использует официальный API Clash of Clans.
 
-A few resources to get you started if this is your first Flutter project:
+## Технологии
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- **Flutter 3.24.5** (Dart 3.5.4)
+- **Firebase** — база данных и аналитика
+- **flutter_bloc** — управление состоянием
+- **provider** — зависимости
+- **cached_network_image** — кэширование изображений
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Сборка
+
+```bash
+flutter pub get
+flutter build apk --debug
+flutter build apk --release
+```
+
+## CI/CD
+
+Автоматическая сборка через GitHub Actions при пуше в main. Артефакты (APK) загружаются в Actions.
+
+## Структура
+
+- `lib/data/` — API, база данных, BLoC
+- `lib/domain/` — модели данных
+- `lib/presentation/` — экраны и виджеты
+- `lib/internal/` — темы, константы, маршруты
+- `assets/` — иконки ( troops, heroes, spells и т.д.)

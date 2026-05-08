@@ -47,11 +47,11 @@ class PlayerCardWidget extends StatelessWidget {
                   children: [
                     Text(
                       '${data.name}',
-                      style: themeData.textTheme.headline1,
+                      style: themeData.textTheme.displayLarge,
                     ),
                     Text(
                       '${data.tag}',
-                      style: themeData.textTheme.headline3,
+                      style: themeData.textTheme.displaySmall,
                     ),
                   ]),
             ),
@@ -59,7 +59,7 @@ class PlayerCardWidget extends StatelessWidget {
               flex: 1,
               child: IconButton(
                   splashRadius: 20,
-                  splashColor: themeData.accentColor,
+                  splashColor: themeData.colorScheme.secondary,
                   icon: Icon(Icons.share_outlined),
                   iconSize: 18,
                   color: themeData.primaryColor.withOpacity(0.8),
@@ -101,11 +101,11 @@ class PlayerCardWidget extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Text(
             'DONATIONS' + ' ${data.donations}',
-            style: themeData.textTheme.headline3,
+            style: themeData.textTheme.displaySmall,
           ),
           Text(
             'DONATIONS RECEIVED' + ' ${data.donationsReceived}',
-            style: themeData.textTheme.headline3,
+            style: themeData.textTheme.displaySmall,
           )
         ]);
 
@@ -123,7 +123,7 @@ class PlayerCardWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10.0),
             child: Text(
               '${data.role}',
-              style: themeData.textTheme.headline2,
+              style: themeData.textTheme.displayMedium,
             ),
           ),
           SizedBox(height: 15.0),

@@ -81,7 +81,7 @@ class MyDrawer extends StatelessWidget {
           Icon(icon),
           Padding(
             padding: EdgeInsets.only(left: 8.0),
-            child: Text(text, style: themeData.textTheme.headline4),
+            child: Text(text, style: themeData.textTheme.headlineMedium),
           )
         ],
       ),
@@ -118,8 +118,8 @@ class MyDrawer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(data.name, style: themeData.textTheme.headline1),
-                    Text(data.tag, style: themeData.textTheme.headline3),
+                    Text(data.name, style: themeData.textTheme.displayLarge),
+                    Text(data.tag, style: themeData.textTheme.displaySmall),
                   ],
                 ),
               ),
@@ -138,7 +138,7 @@ class MyDrawer extends StatelessWidget {
                             ),
                           ),
                           Text(data.league.name,
-                              style: themeData.textTheme.headline2),
+                              style: themeData.textTheme.displayMedium),
                         ],
                       ),
                     )

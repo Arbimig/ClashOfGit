@@ -72,7 +72,7 @@ class Modal {
       ),
       title: Text(
         name,
-        style: themeData.textTheme.headline2,
+        style: themeData.textTheme.displayMedium,
       ),
       onTap: action(context, playerTag),
     );
@@ -192,7 +192,7 @@ class ProfilesPage extends StatelessWidget {
                     child: time != 0
                         ? Text('$time seconds',
                             textAlign: TextAlign.end,
-                            style: themeData.textTheme.headline3)
+                            style: themeData.textTheme.displaySmall)
                         : SizedBox(),
                   )
                 ],
@@ -233,11 +233,11 @@ class ProfilesPage extends StatelessWidget {
             ),
             title: Text(
               '${data[i].name}',
-              style: themeData.textTheme.headline1,
+              style: themeData.textTheme.displayLarge,
             ),
             subtitle: Text(
               '${data[i].tag}',
-              style: themeData.textTheme.headline2,
+              style: themeData.textTheme.displayMedium,
             ),
           ),
         )),

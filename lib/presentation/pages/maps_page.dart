@@ -121,7 +121,7 @@ class MapPage extends StatelessWidget {
               ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(themeData.accentColor)),
+                          MaterialStateProperty.all(themeData.colorScheme.secondary)),
                   onPressed: () {
                     launch(
                       '${data['baseUrl']}',
@@ -151,20 +151,20 @@ class MapsPageAppBar extends StatelessWidget with PrefAppBar {
         tabs: [
           Tab(
             child: Text('Farm',
-                style: themeData.textTheme.subtitle1,
+                style: themeData.textTheme.titleMedium,
                 softWrap: false,
                 overflow: TextOverflow.fade),
           ),
           Tab(
             child: Text('War',
-                style: themeData.textTheme.subtitle1,
+                style: themeData.textTheme.titleMedium,
                 softWrap: false,
                 overflow: TextOverflow.fade),
           ),
           Tab(
             child: Text(
               'Defence',
-              style: themeData.textTheme.subtitle1,
+              style: themeData.textTheme.titleMedium,
               softWrap: false,
               overflow: TextOverflow.fade,
             ),
@@ -182,61 +182,61 @@ class MapsPageAppBar extends StatelessWidget with PrefAppBar {
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 4',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '4th'),
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 5',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '5th'),
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 6',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '6th'),
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 7',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '7th'),
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 8',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '8th'),
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 9',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '9th'),
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 10',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '10th'),
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 11',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '11th'),
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 12',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '12th'),
             PopupMenuItem<String>(
                 child: Text(
                   'TownHall 13',
-                  style: themeData.textTheme.headline2,
+                  style: themeData.textTheme.displayMedium,
                 ),
                 value: '13th'),
           ],

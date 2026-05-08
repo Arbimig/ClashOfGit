@@ -16,7 +16,7 @@ class ArmyStatistics extends StatelessWidget {
           child: ListTile(
               title: Text(
             'Troops',
-            style: themeData.textTheme.headline1,
+            style: themeData.textTheme.displayLarge,
           )),
         ),
         armySliverGrid(context, data.troops),
@@ -24,7 +24,7 @@ class ArmyStatistics extends StatelessWidget {
           child: ListTile(
               title: Text(
             'Spells',
-            style: themeData.textTheme.headline1,
+            style: themeData.textTheme.displayLarge,
           )),
         ),
         armySliverGrid(context, data.spells),
@@ -32,7 +32,7 @@ class ArmyStatistics extends StatelessWidget {
           child: ListTile(
               title: Text(
             'Heroes',
-            style: themeData.textTheme.headline1,
+            style: themeData.textTheme.displayLarge,
           )),
         ),
         armySliverGrid(context, data.heroes),
@@ -113,7 +113,7 @@ class ArmyStatistics extends StatelessWidget {
                                   ]
                                 : [
                                     BoxShadow(
-                                      color: themeData.accentColor
+                                      color: themeData.colorScheme.secondary
                                           .withOpacity(0.5),
                                       blurRadius: 5,
                                       spreadRadius: 1,
@@ -128,14 +128,14 @@ class ArmyStatistics extends StatelessWidget {
                                         Colors.yellow[600]!.withOpacity(0.2),
                                       ]
                                     : [
-                                        themeData.accentColor.withOpacity(0.5),
-                                        themeData.accentColor,
+                                        themeData.colorScheme.secondary.withOpacity(0.5),
+                                        themeData.colorScheme.secondary,
                                       ]),
                           ),
                           child: Center(
                             child: Text(
                               '${_data.level}',
-                              style: themeData.textTheme.caption,
+                              style: themeData.textTheme.bodySmall,
                             ),
                           ),
                         ),
@@ -145,7 +145,7 @@ class ArmyStatistics extends StatelessWidget {
                         left: 3,
                         child: Text(
                           '${_data.name}',
-                          style: themeData.textTheme.caption,
+                          style: themeData.textTheme.bodySmall,
                         ),
                       ),
                     ],

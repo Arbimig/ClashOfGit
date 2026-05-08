@@ -32,17 +32,17 @@ class AchievementsStatistics extends StatelessWidget {
                           child: Text(
                             '${datar?.value} / ${datar?.target}',
                             textAlign: TextAlign.end,
-                            style: themeData.textTheme.headline2,
+                            style: themeData.textTheme.displayMedium,
                           )),
                   leading: Container(
                       width: deviceWidth * 0.15,
                       child: Image.asset(
                           'assets/icons/achievements/${datar?.stars}_star_icon.png')),
                   title: Text('${datar?.name}',
-                      style: themeData.textTheme.headline1),
+                      style: themeData.textTheme.displayLarge),
                   subtitle: Text(
                     '${datar?.info}',
-                    style: themeData.textTheme.headline3,
+                    style: themeData.textTheme.displaySmall,
                   ),
                 ),
               ),

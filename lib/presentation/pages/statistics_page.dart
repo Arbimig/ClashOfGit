@@ -62,20 +62,20 @@ class StatisticsAppBar extends StatelessWidget with PrefAppBar {
         tabs: [
           Tab(
             child: Text('Player',
-                style: themeData.textTheme.subtitle1,
+                style: themeData.textTheme.titleMedium,
                 softWrap: false,
                 overflow: TextOverflow.fade),
           ),
           Tab(
             child: Text('Army',
-                style: themeData.textTheme.subtitle1,
+                style: themeData.textTheme.titleMedium,
                 softWrap: false,
                 overflow: TextOverflow.fade),
           ),
           Tab(
             child: Text(
               'Achievements',
-              style: themeData.textTheme.subtitle1,
+              style: themeData.textTheme.titleMedium,
               softWrap: false,
               overflow: TextOverflow.fade,
             ),

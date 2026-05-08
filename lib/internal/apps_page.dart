@@ -61,8 +61,8 @@ class AppsPage extends StatelessWidget {
   }
 }
 
-abstract class PrefAppBar implements PreferredSizeWidget {
-  final Color appBarColor = themeData.accentColor;
+mixin PrefAppBar implements PreferredSizeWidget {
+  Color get appBarColor => themeData.colorScheme.secondary;
   @override
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 }

@@ -27,9 +27,9 @@ class HomeBaseCardWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('TH LVL', style: themeData.textTheme.headline2),
+                  Text('TH LVL', style: themeData.textTheme.displayMedium),
                   Text('${data.townHallLevel}',
-                      style: themeData.textTheme.headline2),
+                      style: themeData.textTheme.displayMedium),
                 ],
               ),
             ),
@@ -41,9 +41,9 @@ class HomeBaseCardWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('TH WEAPON LVL',
-                            style: themeData.textTheme.headline2),
+                            style: themeData.textTheme.displayMedium),
                         Text('${data.townHallWeaponLevel}',
-                            style: themeData.textTheme.headline2),
+                            style: themeData.textTheme.displayMedium),
                       ],
                     ),
                   )
@@ -74,10 +74,10 @@ class HomeBaseCardWidget extends StatelessWidget {
                 children: [
                   data.league != null
                       ? Text('${data.league!.name.toUpperCase()}',
-                          style: themeData.textTheme.headline2)
+                          style: themeData.textTheme.displayMedium)
                       : Container(),
                   Text('${data.trophies}',
-                      style: themeData.textTheme.headline2),
+                      style: themeData.textTheme.displayMedium),
                 ],
               ),
             ),
@@ -86,9 +86,9 @@ class HomeBaseCardWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('BEST TROPHIES', style: themeData.textTheme.headline2),
+                  Text('BEST TROPHIES', style: themeData.textTheme.displayMedium),
                   Text('${data.bestTrophies}',
-                      style: themeData.textTheme.headline2),
+                      style: themeData.textTheme.displayMedium),
                 ],
               ),
             )
@@ -98,15 +98,15 @@ class HomeBaseCardWidget extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Text(
             'ATTACK WINS' + ' ${data.attackWins}',
-            style: themeData.textTheme.headline3,
+            style: themeData.textTheme.displaySmall,
           ),
           Text(
             'WAR STARS' + ' ${data.warStars}',
-            style: themeData.textTheme.headline3,
+            style: themeData.textTheme.displaySmall,
           ),
           Text(
             'DEFENSE WINS' + ' ${data.defenseWins}',
-            style: themeData.textTheme.headline3,
+            style: themeData.textTheme.displaySmall,
           )
         ]);
 
@@ -123,7 +123,7 @@ class HomeBaseCardWidget extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10.0, top: 10.0),
               child: Text(
                 'HOME BASE',
-                style: themeData.textTheme.headline2,
+                style: themeData.textTheme.displayMedium,
               ),
             ),
             SizedBox(

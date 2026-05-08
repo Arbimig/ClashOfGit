@@ -25,9 +25,9 @@ class BuilderBaseCardWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('BTH LVL', style: themeData.textTheme.headline2),
+                  Text('BTH LVL', style: themeData.textTheme.displayMedium),
                   Text('${data.builderHallLevel}',
-                      style: themeData.textTheme.headline2),
+                      style: themeData.textTheme.displayMedium),
                 ],
               ),
             ),
@@ -50,9 +50,9 @@ class BuilderBaseCardWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('VERSUS LEAGUE', style: themeData.textTheme.headline2),
+                  Text('VERSUS LEAGUE', style: themeData.textTheme.displayMedium),
                   Text('${data.versusTrophies}',
-                      style: themeData.textTheme.headline2),
+                      style: themeData.textTheme.displayMedium),
                 ],
               ),
             ),
@@ -61,9 +61,9 @@ class BuilderBaseCardWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('BEST TROPHIES', style: themeData.textTheme.headline2),
+                  Text('BEST TROPHIES', style: themeData.textTheme.displayMedium),
                   Text('${data.bestVersusTrophies}',
-                      style: themeData.textTheme.headline2),
+                      style: themeData.textTheme.displayMedium),
                 ],
               ),
             )
@@ -73,7 +73,7 @@ class BuilderBaseCardWidget extends StatelessWidget {
         Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Text(
             'VS BATTLE WINS' + ' ${data.versusBattleWins}',
-            style: themeData.textTheme.headline3,
+            style: themeData.textTheme.displaySmall,
           ),
         ]);
 
@@ -90,7 +90,7 @@ class BuilderBaseCardWidget extends StatelessWidget {
               padding: const EdgeInsets.only(left: 10.0, top: 10.0),
               child: Text(
                 'BUILDER BASE',
-                style: themeData.textTheme.headline2,
+                style: themeData.textTheme.displayMedium,
               ),
             ),
             SizedBox(

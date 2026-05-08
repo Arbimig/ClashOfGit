@@ -59,11 +59,11 @@ class ClanPageAppBar extends StatelessWidget with PrefAppBar {
 //                     children: [
 //                       Text(
 //                         '${data.clan.name}',
-//                         style: themeData.textTheme.headline2,
+//                         style: themeData.textTheme.displayMedium,
 //                       ),
 //                       Text(
 //                         '${data.clan.tag}',
-//                         style: themeData.textTheme.headline3,
+//                         style: themeData.textTheme.displaySmall,
 //                       ),
 //                     ],
 //                   ),
@@ -72,7 +72,7 @@ class ClanPageAppBar extends StatelessWidget with PrefAppBar {
 //                   flex: 1,
 //                   child: IconButton(
 //                       splashRadius: 20,
-//                       splashColor: themeData.accentColor,
+//                       splashColor: themeData.colorScheme.secondary,
 //                       icon: Icon(Icons.share_outlined),
 //                       iconSize: 18,
 //                       color: themeData.primaryColor.withOpacity(0.8),

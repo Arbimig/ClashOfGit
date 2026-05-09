@@ -34,6 +34,9 @@
 # Web related
 lib/generated_plugin_registrant.dart
 
+# Config with secrets
+lib/config/api_config.dart
+
 # Symbolication related
 app.*.symbols
 

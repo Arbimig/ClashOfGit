@@ -7,8 +7,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../internal/apps_page.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_database/firebase_database.dart';
 
 class MapsPage extends StatelessWidget {
   final GetBasePlans getBasePlans = GetBasePlans();

@@ -3,9 +3,9 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clashofclans/data/bloc/navigation_cubit.dart';
 import 'package:clashofclans/data/bloc/player_cubit.dart';
-// import 'package:clashofclans/data/bloc/player_cubit_json/player_cubit_state.dart';
 import 'package:clashofclans/data/bloc/switch_player_cubit.dart';
 import 'package:clashofclans/data/bloc/swith_theme_cubit.dart';
+import 'package:clashofclans/internal/app_strings.dart';
 import 'package:clashofclans/internal/constants.dart';
 import 'package:clashofclans/domain/models/player_model.dart';
 import 'package:flutter/material.dart';
@@ -161,13 +161,6 @@ class MyDrawer extends StatelessWidget {
               getPage.getStat();
               Navigator.pop(context);
             }),
-        // _createDrawerItem(
-        //     icon: Icons.contacts_outlined,
-        //     text: 'сlan',
-        //     onTap: () {
-        //       getPage.getClan();
-        //       Navigator.pop(context);
-        //     }),
         Divider(),
       ],
     );
@@ -183,13 +176,6 @@ class MyDrawer extends StatelessWidget {
               getPage.getMaps();
               Navigator.pop(context);
             }),
-        // _createDrawerItem(
-        //     icon: Icons.book_outlined,
-        //     text: 'guide',
-        //     onTap: () {
-        //       getPage.getGuide();
-        //       Navigator.pop(context);
-        //     }),
         Divider(),
         _createDrawerItem(
             icon: Icons.account_circle_outlined,
@@ -198,13 +184,6 @@ class MyDrawer extends StatelessWidget {
               getPage.getProfiles();
               Navigator.pop(context);
             }),
-        // _createDrawerItem(
-        //     icon: Icons.settings_outlined,
-        //     text: 'settings',
-        //     onTap: () {
-        //       getPage.getSettings();
-        //       Navigator.pop(context);
-        //     }),
         _createDrawerItem(
             icon: Icons.web_asset_outlined, text: 'disable ads', onTap: () {}),
         ListTile(

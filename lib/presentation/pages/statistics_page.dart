@@ -5,6 +5,7 @@ import 'package:clashofclans/presentation/sub_pages/achievements_statistics_subp
 import 'package:clashofclans/presentation/sub_pages/army_statistics_subpage.dart';
 import 'package:clashofclans/presentation/sub_pages/player_statistics_subpage.dart';
 import 'package:flutter/material.dart';
+import 'package:clashofclans/internal/app_strings.dart';
 import 'package:clashofclans/internal/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,7 +32,7 @@ class StatisticsPage extends StatelessWidget {
                     ]);
                   }
                   return Center(
-                    child: Text('add player1'),
+                    child: Text(AppStrings.addPlayerFirst + '1'),
                   );
                 });
           }
@@ -40,9 +41,9 @@ class StatisticsPage extends StatelessWidget {
       }
       if (profIndex is NoPlayerIndexState) {
         return TabBarView(children: [
-          Center(child: Text('add player')),
-          Center(child: Text('add player')),
-          Center(child: Text('add player'))
+          Center(child: Text(AppStrings.addPlayerFirst)),
+          Center(child: Text(AppStrings.addPlayerFirst)),
+          Center(child: Text(AppStrings.addPlayerFirst))
         ]);
       }
       return Container();
@@ -61,20 +62,20 @@ class StatisticsAppBar extends StatelessWidget with PrefAppBar {
       bottom: TabBar(
         tabs: [
           Tab(
-            child: Text('Player',
+            child: Text(AppStrings.player,
                 style: themeData.textTheme.titleMedium,
                 softWrap: false,
                 overflow: TextOverflow.fade),
           ),
           Tab(
-            child: Text('Army',
+            child: Text(AppStrings.armyTab,
                 style: themeData.textTheme.titleMedium,
                 softWrap: false,
                 overflow: TextOverflow.fade),
           ),
           Tab(
             child: Text(
-              'Achievements',
+              AppStrings.achievements,
               style: themeData.textTheme.titleMedium,
               softWrap: false,
               overflow: TextOverflow.fade,
@@ -83,7 +84,7 @@ class StatisticsAppBar extends StatelessWidget with PrefAppBar {
         ],
       ),
       title: Text(
-        'Statistics',
+        AppStrings.statistics,
         style: TextStyle(
             fontSize: 18, fontWeight: FontWeight.w300, color: Colors.white),
       ),

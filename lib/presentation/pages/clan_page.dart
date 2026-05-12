@@ -3,6 +3,7 @@ import 'package:clashofclans/data/api/service/clan_api.dart';
 import 'package:clashofclans/data/bloc/player_cubit.dart';
 import 'package:clashofclans/data/bloc/switch_player_cubit.dart';
 import 'package:clashofclans/domain/models/clan_model.dart';
+import 'package:clashofclans/internal/app_strings.dart';
 import 'package:clashofclans/internal/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

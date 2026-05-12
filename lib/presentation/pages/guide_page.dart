@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:clashofclans/internal/app_strings.dart';
 
 import '../../internal/apps_page.dart';
 
@@ -343,7 +344,7 @@ class _GuidePageState extends State<GuidePage>
                   borderRadius: BorderRadius.circular(12),
                 ),
                 filled: true,
-                fillColor: themeData.colorScheme.surface,
+                fillColor: Theme.of(context).colorScheme.surface,
               ),
               onChanged: (value) {
                 setState(() => _searchQuery = value);
@@ -352,9 +353,9 @@ class _GuidePageState extends State<GuidePage>
           ),
           TabBar(
             controller: _tabController,
-            labelColor: themeData.primaryColor,
-            unselectedLabelColor: themeData.textTheme.bodyMedium?.color,
-            indicatorColor: themeData.primaryColor,
+            labelColor: Theme.of(context).primaryColor,
+            unselectedLabelColor: Theme.of(context).textTheme.bodyMedium?.color,
+            indicatorColor: Theme.of(context).primaryColor,
             tabs: [
               Tab(text: 'Army'),
               Tab(text: 'War'),
@@ -382,7 +383,7 @@ class _GuidePageState extends State<GuidePage>
       return Center(
         child: Text(
           'No guides found',
-          style: themeData.textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       );
     }
@@ -402,13 +403,13 @@ class _GuidePageState extends State<GuidePage>
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             title: Text(
               guide.title,
-              style: themeData.textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             subtitle: Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(
                 guide.shortDescription,
-                style: themeData.textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
             trailing: guide.townHallLevel != null
@@ -417,7 +418,7 @@ class _GuidePageState extends State<GuidePage>
                       'TH${guide.townHallLevel}',
                       style: TextStyle(fontSize: 12),
                     ),
-                    backgroundColor: themeData.colorScheme.secondary,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
                   )
                 : Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
@@ -446,7 +447,7 @@ class GuideDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: themeData.colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         title: Text(guide.title),
       ),
       body: SingleChildScrollView(
@@ -459,14 +460,14 @@ class GuideDetailPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 12),
                 child: Chip(
                   label: Text('Town Hall ${guide.townHallLevel}'),
-                  backgroundColor: themeData.colorScheme.secondary,
+                  backgroundColor: Theme.of(context).colorScheme.secondary,
                 ),
               ),
             Text(
               guide.shortDescription,
-              style: themeData.textTheme.titleMedium?.copyWith(
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontStyle: FontStyle.italic,
-                color: themeData.textTheme.bodyMedium?.color,
+                color: Theme.of(context).textTheme.bodyMedium?.color,
               ),
             ),
             const SizedBox(height: 16),
@@ -474,7 +475,7 @@ class GuideDetailPage extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               guide.fullContent,
-              style: themeData.textTheme.bodyLarge,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),

@@ -4,6 +4,7 @@ import 'package:clashofclans/data/bloc/player_cubit.dart';
 import 'package:clashofclans/data/bloc/swith_theme_cubit.dart';
 import 'package:clashofclans/data/bloc/timer_cubit.dart';
 import 'package:clashofclans/domain/models/player_model.dart';
+import 'package:clashofclans/internal/app_strings.dart';
 import 'package:clashofclans/internal/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,14 +25,14 @@ class Modal {
                   children: <Widget>[
                     _createTile(
                       context,
-                      'Update',
+                      AppStrings.update,
                       Icons.arrow_upward_outlined,
                       _update,
                       data,
                     ),
                     _createTile(
                       context,
-                      'Delete',
+                      AppStrings.delete,
                       Icons.delete_outline,
                       _remove,
                       data,
@@ -45,7 +46,7 @@ class Modal {
                   children: <Widget>[
                     _createTile(
                       context,
-                      'Delete',
+                      AppStrings.delete,
                       Icons.delete_outline,
                       _remove,
                       data,
@@ -80,14 +81,10 @@ class Modal {
 
   _update(context, String playerTag) {
     print('Modal.dart action2 updateCar');
-    // playerCubitFunc.update(playerTag);
-    // Navigator.pop(context);
   }
 
   _remove(context, String playerTag) {
     print('Modal.dart action3 removeCar');
-    // playerCubitFunc.delete(playerTag);
-    // Navigator.pop(context);
   }
 }
 
@@ -180,7 +177,7 @@ class ProfilesPage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Add player',
+                        Text(AppStrings.addPlayer,
                             style: TextStyle(fontWeight: FontWeight.w300)),
                         Icon(Icons.add),
                       ],
@@ -250,7 +247,7 @@ class ProfilesPage extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('Enter Player Tag'),
+            title: Text(AppStrings.enterPlayerTag),
             content: Form(
               key: _formKey,
               child: TextFormField(
@@ -262,7 +259,7 @@ class ProfilesPage extends StatelessWidget {
                     fillColor: Colors.red,
                     focusColor: Colors.red,
                     hoverColor: Colors.red,
-                    hintText: "#XXXXXX",
+                    hintText: AppStrings.tagHint,
                     suffix: IconButton(
                       icon: Icon(
                         Icons.search,
@@ -294,11 +291,11 @@ class ProfilesPage extends StatelessWidget {
   String? _validate(String? value) {
     String text = textEditingController.text;
     if (value!.isEmpty) {
-      return 'Tag cannot be empty';
+      return AppStrings.tagCannotBeEmpty;
     } else if (!text.startsWith('#')) {
-      return 'Invalid Tag address';
+      return AppStrings.invalidTag;
     } else if (text.toUpperCase() != text) {
-      return 'Invalid Tag address';
+      return AppStrings.invalidTag;
     } else {
       return null;
     }
@@ -313,7 +310,7 @@ class ProfilesPageAppBar extends StatelessWidget with PrefAppBar {
       iconTheme: IconThemeData(color: Colors.white),
       backgroundColor: appBarColor,
       title: Text(
-        'Profiles page',
+        AppStrings.profiles,
         style: TextStyle(
             fontSize: 18, fontWeight: FontWeight.w300, color: Colors.white),
       ),

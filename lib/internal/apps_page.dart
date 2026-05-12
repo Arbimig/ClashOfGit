@@ -2,6 +2,7 @@ import 'package:clashofclans/data/bloc/switch_th_lvl_cubit.dart';
 import 'package:clashofclans/data/bloc/navigation_cubit.dart';
 import 'package:clashofclans/presentation/pages/statistics_page.dart';
 import 'package:clashofclans/presentation/drawer.dart';
+import 'package:clashofclans/internal/app_strings.dart';
 import 'package:clashofclans/internal/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,4 +1,5 @@
 import 'package:clashofclans/data/bloc/switch_th_lvl_cubit.dart';
+import 'package:clashofclans/internal/app_strings.dart';
 import 'package:clashofclans/internal/constants.dart';
 import 'package:clashofclans/internal/base_plans.dart';
 import 'package:flutter/material.dart';

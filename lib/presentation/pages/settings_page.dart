@@ -1,6 +1,7 @@
 import 'package:clashofclans/data/bloc/player_cubit.dart';
 import 'package:clashofclans/data/bloc/switch_th_lvl_cubit.dart';
 import 'package:clashofclans/data/bloc/swith_theme_cubit.dart';
+import 'package:clashofclans/internal/app_strings.dart';
 import 'package:clashofclans/internal/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +38,7 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Appearance',
+              AppStrings.appearance,
               style: themeData.textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
@@ -46,7 +47,7 @@ class SettingsPage extends StatelessWidget {
                 final isDark = currentTheme.brightness == Brightness.dark;
                 return SwitchListTile(
                   title: Text(
-                    'Dark Theme',
+                    AppStrings.darkTheme,
                     style: themeData.textTheme.headlineMedium,
                   ),
                   subtitle: Text(
@@ -84,7 +85,7 @@ class SettingsPage extends StatelessWidget {
               builder: (context, currentLevel) {
                 return ListTile(
                   title: Text(
-                    'Default Town Hall Level',
+                    AppStrings.defaultTHLevel,
                     style: themeData.textTheme.headlineMedium,
                   ),
                   subtitle: Text(
@@ -161,7 +162,7 @@ class SettingsPage extends StatelessWidget {
             const SizedBox(height: 8),
             ListTile(
               title: Text(
-                'Clear All Saved Players',
+                AppStrings.clearAllPlayers,
                 style: themeData.textTheme.headlineMedium,
               ),
               subtitle: Text(
@@ -234,17 +235,17 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'App Info',
+              AppStrings.appInfo,
               style: themeData.textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
             ListTile(
               title: Text(
-                'Version',
+                AppStrings.versionLabel,
                 style: themeData.textTheme.headlineMedium,
               ),
               subtitle: Text(
-                '1.0.0+1',
+                AppStrings.version,
                 style: themeData.textTheme.displayMedium,
               ),
               leading: const Icon(Icons.info_outline),
@@ -252,7 +253,7 @@ class SettingsPage extends StatelessWidget {
             const Divider(),
             ListTile(
               title: Text(
-                'GitHub Repository',
+                AppStrings.githubRepo,
                 style: themeData.textTheme.headlineMedium,
               ),
               subtitle: Text(
@@ -268,7 +269,7 @@ class SettingsPage extends StatelessWidget {
             const Divider(),
             ListTile(
               title: Text(
-                'Clash of Clans API',
+                AppStrings.cocApi,
                 style: themeData.textTheme.headlineMedium,
               ),
               subtitle: Text(
@@ -298,7 +299,7 @@ class SettingsPageAppBar extends StatelessWidget with PrefAppBar {
       iconTheme: const IconThemeData(color: Colors.white),
       backgroundColor: appBarColor,
       title: const Text(
-        'Settings',
+        AppStrings.settings,
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w300,
